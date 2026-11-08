@@ -16,7 +16,7 @@ List<Pago> crearPagosDemostracion() {
     ),
     Pago(
       id: 'demo-2',
-      concepto: 'Arreindo',
+      concepto: 'Arriendo',
       categoria: CategoriaPago.vivienda,
       monto: 1030000,
       fechaVencimiento: relativo(-2),
