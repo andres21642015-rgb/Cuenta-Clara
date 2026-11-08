@@ -89,7 +89,9 @@ class TarjetaPago extends StatelessWidget {
 
               style: TextStyle(color: color, fontWeight: FontWeight.w600),
             ),
-
+            
+              // lo muestro debajo del estado para que se vea quién debe pagar******
+            Text('Responsable: ${pago.responsable}'),
             if (pago.nota.trim().isNotEmpty) Text('Nota ${pago.nota}'),
           ],
         ),

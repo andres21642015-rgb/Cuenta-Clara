@@ -13,6 +13,7 @@ List<Pago> crearPagosDemostracion() {
       fechaVencimiento: relativo(3),
       pagado: false,
       nota: 'Factura mensual',
+      responsable: 'Mamá', // el internet lo paga la mamá***
     ),
     Pago(
       id: 'demo-2',
@@ -22,6 +23,7 @@ List<Pago> crearPagosDemostracion() {
       fechaVencimiento: relativo(-2),
       pagado: false,
       nota: 'Revisar antes de pagar',
+      responsable: 'Papá', // el arriendo lo paga el papá****
     ),
     Pago(
       id: 'demo-3',
@@ -31,6 +33,7 @@ List<Pago> crearPagosDemostracion() {
       fechaVencimiento: relativo(-1),
       pagado: true,
       nota: '',
+      responsable: 'Yo', // el transporte lo pago yo****
     ),
   ];
 }

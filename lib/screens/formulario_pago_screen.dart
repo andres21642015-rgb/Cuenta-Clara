@@ -19,6 +19,9 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
   late final TextEditingController _conceptoController;
   late final TextEditingController _montoController;
   late final TextEditingController _notaController;
+// controller para leer lo que el usuario escribe en responsable**
+  late final TextEditingController _responsableController;
+
 
   late CategoriaPago _categoria;
   late DateTime _fechaVencimiento;
@@ -35,6 +38,8 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
       text: pago?.monto.toString() ?? '',
     );
     _notaController = TextEditingController(text: pago?.nota ?? '');
+    // si estoy editando se carga el responsable que ya tenía, si es nuevo queda vacío**
+    _responsableController = TextEditingController(text: pago?.responsable ?? '');
     _categoria = pago?.categoria ?? CategoriaPago.servicios;
     _fechaVencimiento = pago?.fechaVencimiento ?? DateTime.now();
     _pagado = pago?.pagado ?? false;
@@ -46,6 +51,8 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
     _conceptoController.dispose();
     _montoController.dispose();
     _notaController.dispose();
+    // hay que liberarlo igual que los otros**
+    _responsableController.dispose(); 
     super.dispose();
   }
 
@@ -71,6 +78,9 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
     final concepto = _conceptoController.text.trim();
     final monto = int.parse(_montoController.text.trim());
     final nota = _notaController.text.trim();
+    
+    // trim() para quitar espacios de más al inicio y al final**
+    final responsable = _responsableController.text.trim();
 
     final resultado = anterior == null
         ? Pago(
@@ -81,6 +91,7 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
             fechaVencimiento: _fechaVencimiento,
             pagado: _pagado,
             nota: nota,
+            responsable: responsable, // cuando es un pago nuevo**
           )
         : anterior.copyWith(
             concepto: concepto,
@@ -89,6 +100,7 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
             fechaVencimiento: _fechaVencimiento,
             pagado: _pagado,
             nota: nota,
+            responsable: responsable, // cuando estoy editando uno que ya existía**
           );
 
     // Devuelve el pago a la pantalla anterior sin guardar en una BD todavía.
@@ -140,6 +152,28 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
               },
             ),
             const SizedBox(height: 12),
+
+            //******************************************* */
+            // Campo nuevo del reto: responsable del pago
+            TextFormField(
+              controller: _responsableController,
+              decoration: const InputDecoration(
+                labelText: 'Responsable del pago',
+                hintText: 'Ej.: Mamá, Papá, Yo',
+                border: OutlineInputBorder(),
+                prefixIcon: Icon(Icons.person_outline),
+              ),
+              // valido que no lo dejen vacío ni con puros espacios
+              validator: (valor) {
+                if (valor == null || valor.trim().isEmpty) {
+                  return 'Indique quién es el responsable del pago';
+                }
+                return null; // null significa que está bien
+              },
+            ),
+            const SizedBox(height: 12),
+
+
             DropdownButtonFormField<CategoriaPago>(
               initialValue: _categoria,
               decoration: const InputDecoration(
