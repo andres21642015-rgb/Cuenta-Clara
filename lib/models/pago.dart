@@ -43,7 +43,7 @@ class Pago {
     required this.responsable,
   });
 
-  //Creamos una versión actualizada sin modificar el objeto anterior
+ 
   Pago copyWith({
     String? concepto,
     CategoriaPago? categoria,

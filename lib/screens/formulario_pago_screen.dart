@@ -47,7 +47,6 @@ class _FormularioPagoScreenState extends State<FormularioPagoScreen> {
 
   @override
   void dispose() {
-    // Los controllers deben liberarse al cerrar esta pantalla.
     _conceptoController.dispose();
     _montoController.dispose();
     _notaController.dispose();
